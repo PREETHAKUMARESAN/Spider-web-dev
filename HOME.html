@@ -1,0 +1,57 @@
+
+<!DOCTYPE html>
+<html >
+<head>
+
+<title>PREETHA</title>
+<link href="css/style.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+	<div class="header">
+		
+		<div class="logo">
+		
+			<h1><a href="#">PREETHA</a></h1>
+		
+		</div>
+
+	</div>
+
+	<div class="navigation">
+		<ul>
+			<li><a class="active" href="HOME.html">HOME</a></li>
+			<li><a href="ABOUT.html">ABOUT</a></li>
+			<li class="bdr"><a class="pdg" href="contact.html">CONTACT</a></li>
+                         <li class="mem"><a href="MEMORY.html">MEMORY GAME</a></li>							
+		</ul>
+	</div>
+
+
+		<div id="slider">
+			<ul>				
+				<li><a href="#"><img src="images/preetha.JPG" alt="" /></a></li>
+				<li><a href="#"><img src="images/preetha1.JPG" alt="" /></a></li>
+				<li><a href="#"><img src="images/preetha2.JPG" alt="" /></a></li>
+			</ul>
+		</div>
+
+
+
+
+
+
+
+	<script type="text/javascript" src="js/jquery.js"></script>	
+	<script type="text/javascript" src="js/easySlider1.7.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function(){	
+			$("#slider").easySlider({
+				auto: true, 
+				continuous: true
+			});
+		});	
+	</script>
+
+
+</body>
+</html>
