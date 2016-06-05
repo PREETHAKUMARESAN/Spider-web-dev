@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Memory Game</title>
+</head>
+<style>
+div#memoryGame{
+	width:660px;
+	height:380px;
+	padding-left:360px;
+	padding-top:20px;
+	
+}
+div#memoryGame > div{
+	background:url(memory1.png) no-repeat;
+	border:#000 2px solid;
+	width:87px;
+	height:87px;
+	float:left;
+	margin:10px;
+	padding:20px;
+	font-size:64px;
+	cursor:pointer;
+	text-align:center;
+}
+</style>
+<script>
+
+var noflippedtiles = 0;
+var array = ['A','A','B','B','C','C','D','D','E','E','F','F','G','G','H','H'];
+var values = [];
+var tileID = [];
+var score=0;
+
+Array.prototype.tileShuffle = function(){
+    var i = this.length, j, temp;
+    while(--i > 0){
+        j = Math.floor(Math.random() * (i+1));
+        temp = this[j];
+        this[j] = this[i];
+        this[i] = temp;
+    }
+}
+function boardChange(){
+	noflippedtiles = 0;
+	var output = '';
+    array.tileShuffle();
+	for(var i = 0; i < array.length; i++){
+		output += '<div id="tile_'+i+'" onclick="flipTiles(this,\''+array[i]+'\')"></div>';
+	}
+	document.getElementById('memoryGame').innerHTML = output;
+}
+function flipTiles(tile,val){
+	if(tile.innerHTML == "" && values.length < 2){
+		tile.style.background = '#006699';
+		tile.innerHTML = val;
+		if(values.length == 0){
+			values.push(val);
+			tileID.push(tile.id);
+		} else if(values.length == 1){
+			values.push(val);
+			tileID.push(tile.id);
+			if(values[0] == values[1]){
+				noflippedtiles += 2; score++;
+				
+				values = [];
+            	tileID = [];
+				
+				if(noflippedtiles == array.length){
+					alert('Congrats! U Have cleared the board. Your score is '+score);
+					alert('lets play again :)');
+					document.getElementById('memoryGame').innerHTML = "";
+					boardChange();
+				}
+			} else {
+				function flipIfNoMatch(){
+				    
+				    var tile_1 = document.getElementById(tileID[0]);
+				    var tile_2 = document.getElementById(tileID[1]);
+				    tile_1.style.background = 'url(memory1.png) no-repeat';
+            	    tile_1.innerHTML = "";
+				    tile_2.style.background = 'url(memory1.png) no-repeat';
+            	    tile_2.innerHTML = "";
+				    values = [];
+            	    tileID = [];
+				}
+				
+				setTimeout(flipIfNoMatch, 500);
+				
+			}
+		}
+	}
+
+}
+
+</script>
+</head>
+<body>
+<div id="memoryGame"></div>
+<script>boardChange();</script>
+</body>
+</html>
