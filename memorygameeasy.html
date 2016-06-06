@@ -2,18 +2,42 @@
 <html>
 <head>
 <title>Memory Game</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<meta name="author" content="PREETHA KUMARESAN :)">
+
+<link rel="icon" type="image/png" href="icon.ico">
+<link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css">
 </head>
 
 <body>
+<i class="fa fa-github" style="font-size:48px;"></i>
+    
+	<div id="scores">
+	  <span>LET'S PLAY MY MEMORY GAME</span>
+	  <div id="updateScore">
+	  </div>
+	</div>
+ 
+ 
+<div id="boardtype">
+		
+		<input type="radio" name="boardType" value="small" id="smallG" checked>2x4</input>
+		<input type="radio" name="boardType" value="medium" id="medG" checked>3x4</input>
+		<input type="radio" name="boardType" value="large" id="largeG" checked>4x4</input>
+		<br>
+		<button id="start" value="start">Start</button>
+	</div>
 <div id="memoryGame"></div>
-</body>
+ </body>
 
 <style>
 
 #memoryGame
 {
 	padding-left:360px;
-	padding-top:20px;
+	padding-top:-100px;
 	width:660px;
 	height:380px;
 }
@@ -32,27 +56,106 @@
 	padding:20px;
 	
 }
+
+#updateScore
+{
+	background-color:#006699;
+}
+
+#scores
+{
+	margin-top:10px;
+	position:relative;
+	width:980px;
+	background-color:#006699;
+	height:70px;
+	margin:40px;
+	margin-left:100px;
+	text-align:center;
+	font-size:45px;
+	border-top:1px solid black;
+	border-left:1px groove black;
+	border-right:1px groove black;
+}
+
+#boardtype
+{
+	border-left: 1px solid black;
+	border-right: 1px solid black;
+	font-size:30px;
+	margin:50px;
+	margin-left:170px;
+	width:980px;
+	text-align:center;
+	background-color:#DF755E;
+}
 </style>
 <script>
 
-var noflippedtiles = 0;
-var array = ['P','P','Q','Q','R','R','S','S','T','T','U','U','M','M','K','K'];
+
+
 var values = [];
 var tileID = [];
 var score=0;
 
+var array=[];
+var noflippedtiles = 0;
+var moves=0;
+var values = [];
+var tileID = [];
+
 
 function boardChange()
 {
+    var score=0; var moves=0;
 	noflippedtiles = 0;
 	var output = '';
     array.tileShuffle();
-	for(var i = 0; i < array.length; i++)
+	for(var i=0;i<r*c;i++)
 	{
 		output = output + '<div id="tile_'+i+'" onclick="flipTiles(this,\''+array[i]+'\')"></div>';
 	}
 	document.getElementById('memoryGame').innerHTML = output;
 }
+
+document.getElementById('start').onclick = function()
+					{
+	               
+	                  var grid = document.getElementsByName('boardType');
+					  
+	                  var sizeG;
+	                    for(var i=0; i < grid.length; ++i)
+					    {
+	              	      if(grid[i].checked)
+					        {
+			                 sizeG = grid[i].value;
+			                 break;
+		                    }
+	                    }
+	                    
+	                  if(sizeG == 'large')
+					   {
+		               r = 4;
+		               c = 4;
+					   array = ['P','P','Q','Q','R','R','S','S','T','T','U','U','M','M','K','K'];
+		               }
+	                   else if(sizeG == 'medium')
+					   {
+		                r = 3;
+		                c = 4;
+						array = ['P','P','Q','Q','R','R','S','S','T','T','M','M'];
+					   }
+		               else
+					   {
+		               r = 4;
+		               c = 2;
+					   array = ['A','A','Q','Q','R','R','S','S'];
+		               }
+					    
+					     boardChange();
+				    }
+				
+					   
 
 Array.prototype.tileShuffle = function()
 {
@@ -66,9 +169,9 @@ Array.prototype.tileShuffle = function()
     }
 }
 function flipTiles(tile,val)
-{
-	if(tile.innerHTML == "" && values.length < 2)
-	{
+    { moves++;
+	  if(tile.innerHTML == "" && values.length < 2)
+	 {
 		tile.style.background = '#006699';
 		tile.innerHTML = val;
 		
@@ -92,12 +195,16 @@ function flipTiles(tile,val)
 				if(noflippedtiles == array.length)
 				{
 					alert('Congrats! U Have cleared the board. Your score is '+score);
+					alert('The number of moves made are '+moves);
 					alert('lets play again :)');
-					document.getElementById('memoryGame').innerHTML = "";
+					
+					score=0;moves=0;
+					
 					boardChange();
-				}
+					
 				
-			} 
+			    } 
+			}
 			else 
 		    {
 				 function flipIfNoMatch()
@@ -117,13 +224,13 @@ function flipTiles(tile,val)
 				
 			}
 		}
-	}
-
-}
+	  }
+	  }
+    
 
 </script>
 </head>
 
-<script>boardChange();</script>
+
 
 </html>
